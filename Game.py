@@ -4,7 +4,6 @@ from IPython.display import clear_output
 import os
 import time
 import random
-
 board = [""] + [" "] * 9
 def display_board(board):
     print(board[7]+ '|' + board[8]+ '|' + board[9])
@@ -29,52 +28,68 @@ def board_full (board):
     else:
         return True
 
+def replay():
+    play_again = input("Do you want to play again?(Y/N): ").upper()
 
-while True:
-    display_board(board)
-    move = int(input("X , place a value empty space "))
+    return play_again
 
-    #Player X Code
-    if board[move] == ' ':
-        board[move] = 'X'
-    else:
-        print("Please select another space")
+game = True
+
+while game == True:
+
+    print("WELCOME TO MC TIC TAC TOE")
+    board = [""] + [" "] * 9
+
+    while True:
+        display_board(board)
         move = int(input("X , place a value empty space "))
-        board[move] = 'X'
 
-    if win_check(board, 'X'):
+        #Player X Code
+        if board[move] == ' ':
+            board[move] = 'X'
+        else:
+            print("Please select another space")
+            move = int(input("X , place a value empty space "))
+            board[move] = 'X'
+
+        if win_check(board, 'X'):
+            display_board(board)
+            print("X is the winner")
+            break
+
+        Full = board_full (board)
+
+        if Full == True:
+            print("TIE GAME")
+            display_board(board)
+            break
+
         display_board(board)
-        print("X is the winner")
-        break
 
-    Full = board_full (board)
+        #Player O Code
 
-    if Full == True:
-        print("TIE GAME")
-        display_board(board)
-        break
-
-    display_board(board)
-
-    #Player O Code
-
-    move = int(input("O, place a value in an empty space "))
-
-    if board[move] == ' ':
-        board[move] = 'O'
-    else:
-        print("Please select another space")
         move = int(input("O, place a value in an empty space "))
-        board[move] = 'O'
 
-    if win_check(board, 'O'):
-        display_board(board)
-        print("O is the winner")
-        break
+        if board[move] == ' ':
+             board[move] = 'O'
+        else:
+            print("Please select another space")
+            move = int(input("O, place a value in an empty space "))
+            board[move] = 'O'
 
-    Full = board_full (board)
+        if win_check(board, 'O'):
+            display_board(board)
+            print("O is the winner")
+            break
 
-    if Full == True:
-        print ("TIE GAME")
-        display_board(board)
-        break
+        Full = board_full (board)
+
+        if Full == True:
+            print ("TIE GAME")
+            display_board(board)
+            break
+
+    rewind = replay()
+    
+    if rewind == 'N':
+        exit()
